@@ -1,0 +1,167 @@
+{
+  "audit_date": "2025-06-28",
+  "total_servers": 10,
+  "servers": {
+    "desktop-commander": {
+      "type": "official",
+      "package": "@wonderwhy-er/desktop-commander",
+      "transport": "stdio",
+      "function": "File operations, CLI automation",
+      "migration_priority": 5,
+      "dependencies": ["npx"],
+      "data_path": "A:\\MCP-Servers\\Data\\commander",
+      "cloudflare_bindings": ["KV", "R2"],
+      "estimated_effort": "2 days",
+      "migration_complexity": "medium"
+    },
+    "filesystem": {
+      "type": "official", 
+      "package": "@modelcontextprotocol/server-filesystem",
+      "transport": "stdio",
+      "function": "Multi-drive filesystem access",
+      "drives": ["A:", "C:", "D:", "G:", "W:"],
+      "migration_priority": 5,
+      "dependencies": ["npx"],
+      "cloudflare_bindings": ["R2"],
+      "estimated_effort": "1 day",
+      "migration_complexity": "low"
+    },
+    "azure-mcp": {
+      "type": "official",
+      "package": "@azure/mcp",
+      "transport": "stdio", 
+      "function": "Azure resource management",
+      "migration_priority": 4,
+      "dependencies": ["npx"],
+      "credentials": {
+        "client_id": "ac241ef9-b317-47fe-aa92-56f21ec6f8ae",
+        "tenant_id": "c97cb1fb-d321-401b-b372-417a528542ba"
+      },
+      "data_path": "A:\\MCP-Servers\\Data\\azure",
+      "cloudflare_bindings": ["Workers", "KV"],
+      "estimated_effort": "3 days",
+      "migration_complexity": "high"
+    },
+    "github-official": {
+      "type": "official",
+      "package": "@modelcontextprotocol/server-github", 
+      "transport": "stdio",
+      "function": "GitHub repository management",
+      "migration_priority": 4,
+      "dependencies": ["npx"],
+      "data_path": "A:\\MCP-Servers\\Data\\github",
+      "cloudflare_bindings": ["Workers", "KV"],
+      "estimated_effort": "1 day",
+      "migration_complexity": "low"
+    },
+    "memory-official": {
+      "type": "official",
+      "package": "@modelcontextprotocol/server-memory",
+      "transport": "stdio",
+      "function": "Knowledge graph storage",
+      "migration_priority": 5,
+      "dependencies": ["npx"],
+      "config": {
+        "memory_file": "A:\\MCP-Servers\\Memory\\knowledge_graph.json",
+        "max_entities": 10000,
+        "max_relations": 50000
+      },
+      "cloudflare_bindings": ["D1", "KV"],
+      "estimated_effort": "2 days", 
+      "migration_complexity": "medium"
+    },
+    "mcp-reasoner": {
+      "type": "custom",
+      "path": "A:\\MCP-Servers\\Reasoning\\mcp-reasoner\\dist\\index.js",
+      "transport": "stdio",
+      "function": "MCTS and Beam Search reasoning",
+      "migration_priority": 5,
+      "dependencies": ["node"],
+      "config": {
+        "mcts_iterations": 1000,
+        "beam_width": 5
+      },
+      "data_path": "A:\\MCP-Servers\\Data\\reasoner",
+      "cloudflare_bindings": ["Durable Objects", "KV"],
+      "estimated_effort": "4 days",
+      "migration_complexity": "high"
+    },
+    "sequential-thinking": {
+      "type": "npm",
+      "package": "mcp-sequential-thinking",
+      "transport": "stdio", 
+      "function": "Step-by-step reasoning chains",
+      "migration_priority": 4,
+      "dependencies": ["npx"],
+      "data_path": "A:\\MCP-Servers\\Data\\thinking",
+      "cloudflare_bindings": ["KV"],
+      "estimated_effort": "1 day",
+      "migration_complexity": "low"
+    },
+    "zeo-composable": {
+      "type": "custom",
+      "path": "A:\\MCP-Servers\\Zeo Composable\\mcp-server-script.js",
+      "transport": "stdio",
+      "function": "Unknown (compiled bundle)",
+      "migration_priority": 2,
+      "dependencies": ["node"],
+      "environment": "development",
+      "cloudflare_bindings": ["Workers"],
+      "estimated_effort": "5 days",
+      "migration_complexity": "unknown"
+    },
+    "azure-ai-foundry": {
+      "type": "python",
+      "path": "C:\\Users\\GustavoMendeseSilva\\mcp-foundry",
+      "transport": "stdio",
+      "function": "Azure AI services integration", 
+      "migration_priority": 3,
+      "dependencies": ["uv", "python"],
+      "credentials": {
+        "tenant_id": "c97cb1fb-d321-401b-b372-417a528542ba",
+        "subscription_id": "2290fbe4-e0ae-46e4-9bdd-dd5f7b5397d5"
+      },
+      "cloudflare_bindings": ["Workers", "KV"],
+      "estimated_effort": "3 days",
+      "migration_complexity": "high"
+    },
+    "MCP_DOCKER": {
+      "type": "infrastructure",
+      "command": "docker",
+      "transport": "proxy",
+      "function": "TCP bridge to containerized services",
+      "migration_priority": 1,
+      "dependencies": ["docker"],
+      "port": 8811,
+      "cloudflare_bindings": ["Workers"],
+      "estimated_effort": "N/A",
+      "migration_complexity": "replace"
+    }
+  },
+  "migration_summary": {
+    "high_priority": 6,
+    "medium_priority": 2, 
+    "low_priority": 2,
+    "total_estimated_effort": "22 days",
+    "recommended_order": [
+      "filesystem",
+      "github-official", 
+      "sequential-thinking",
+      "desktop-commander",
+      "memory-official",
+      "azure-mcp",
+      "mcp-reasoner",
+      "azure-ai-foundry",
+      "zeo-composable"
+    ]
+  },
+  "next_steps": [
+    "1. Setup Cloudflare project structure",
+    "2. Migrate filesystem server (easiest, foundation)",
+    "3. Setup GitHub OAuth for github-official",
+    "4. Implement memory-official with D1 backend",
+    "5. Port mcp-reasoner with Durable Objects",
+    "6. Create Azure proxy server",
+    "7. Test complete migration"
+  ]
+}
